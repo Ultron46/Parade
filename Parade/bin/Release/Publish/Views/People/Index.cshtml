@@ -1,0 +1,192 @@
+﻿@model IEnumerable<Parade.Models.Person>
+
+@{
+    ViewBag.Title = "Index";
+    List<SelectListItem> formats = new List<SelectListItem>();
+    formats.Add(new SelectListItem { Text = "PDF", Value = "pdf" });
+    formats.Add(new SelectListItem { Text = "Excel", Value = "xlsx" });
+}
+
+<h2>Index</h2>
+
+<a class="ajaxclass" href="/People/Create">
+    <h4>
+        <i class="fa fa-plus" aria-hidden="true"></i>     Add New
+    </h4>
+</a>
+
+@using (Html.BeginForm("Generate", "People", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.Label("Size", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBox("Size", null, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.Label("Format", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("Format", formats, "--Select Format", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Generate Parade" class="btn btn-default" />
+        </div>
+    </div>
+    <br />
+}
+<table id="people" class="display">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Middle_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Last_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Taluko)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.District)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date_of_Birth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medical_History)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.First_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Middle_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Last_Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Taluko)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.District)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date_of_Birth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Medical_History)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                </td>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Middle_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Last_Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Taluko)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.District)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date_of_Birth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Medical_History)
+            </th>
+            <th></th>
+        </tr>
+    </tfoot>
+</table>
+
+<script src="~/Scripts/jquery-3.5.1.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.buttons.min.js"></script>
+<script src="~/Scripts/jszip.min.js"></script>
+<script src="~/Scripts/pdfmake.min.js"></script>
+<script src="~/Scripts/vfs_fonts.js"></script>
+<script src="~/Scripts/buttons.html5.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#people tfoot th').each(function () {
+            var title = $(this).text();
+            title = title.trim(),
+                $(this).html('<input type="text" style="width: 150px;" placeholder="' + title + '" />');
+        });
+        var table = $('#people').DataTable({
+            select: true,
+            dom: 'Bfrtip',
+            lengthMenu: [
+                [5, 25, 50, -1],
+                ['5', '25', '50', '-1']
+            ],
+            buttons: [
+                {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: ':visible',
+                        rows: ':visible'
+                    },
+                    text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Export a PDF</i>'
+                },
+                {
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: ':visible',
+                        rows: ':visible'
+                    },
+                    text: '<i class="fas fa-file-csv fa-1x"> Export a CSV</i>'
+                },
+                {
+                    extend: 'excel',
+                    exportOptions: {
+                        columns: ':visible',
+                        rows: ':visible'
+                    },
+                    text: '<i class="fas fa-file-excel" aria-hidden="true"> Export a EXCEL</i>'
+                },
+                "pageLength"
+            ],
+            initComplete: function () {
+                this.api().columns().every(function () {
+                    var that = this;
+                    $('input', this.footer()).on('keyup change clear', function () {
+                        if (that.search() !== this.value) {
+                            that
+                                .search(this.value)
+                                .draw();
+                        }
+                    });
+                });
+            }
+        });
+        table.buttons().container()
+            .appendTo('#datatable_wrapper .col-md-6:eq(0)');
+    });
+</script>

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ParadeModelStoreContainer" CdmEntityContainer="ParadeEntities">
+    <EntitySetMapping Name="People">
+      <EntityTypeMapping TypeName="ParadeModel.Person">
+        <MappingFragment StoreEntitySet="Person">
+          <ScalarProperty Name="Medical_History" ColumnName="Medical History" />
+          <ScalarProperty Name="Date_of_Birth" ColumnName="Date of Birth" />
+          <ScalarProperty Name="District" ColumnName="District" />
+          <ScalarProperty Name="Taluko" ColumnName="Taluko" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last Name" />
+          <ScalarProperty Name="Middle_Name" ColumnName="Middle Name" />
+          <ScalarProperty Name="First_Name" ColumnName="First Name" />
+          <ScalarProperty Name="id" ColumnName="id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
