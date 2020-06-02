@@ -26,27 +26,27 @@
     <div class="form-group">
         @Html.Label("Size", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.TextBox("Size", null, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextBox("Size", null, new { @class = "form-control", type = "number" })
         </div>
     </div>
     <br />
     <div class="form-group">
         @Html.Label("Format", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("Format", formats, "--Select Format--", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownList("Format", formats, "--Select Format--", new { @class = "form-control" })
         </div>
     </div>
     <br />
     <div class="form-group">
         @Html.Label("Sort By", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.DropDownList("SortBy", sortBy, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DropDownList("SortBy", sortBy, new { @class = "form-control" })
         </div>
     </div>
     <br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Generate Parade" class="btn btn-default" />
+            <input type="submit" value="Generate Parade" class="btn btn-success" />
         </div>
     </div>
 }

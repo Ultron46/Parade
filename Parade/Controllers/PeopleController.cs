@@ -133,6 +133,11 @@ namespace Parade.Controllers
             Configuration webConfigApp = WebConfigurationManager.OpenWebConfiguration("~");
             int paradeSize = Convert.ToInt32(webConfigApp.AppSettings.Settings["ParadeSize"].Value.ToString());
             int paradeRecords = Convert.ToInt32(webConfigApp.AppSettings.Settings["ParadeRecords"].Value.ToString());
+            if(paradeSize != Size && Size > 0)
+            {
+                paradeSize = Size;
+                webConfigApp.AppSettings.Settings["ParadeSize"].Value = paradeSize.ToString();
+            }
             List<Person> people = new List<Person>();
             var query = db.People.AsQueryable();
             if(SortBy == 0)
@@ -155,18 +160,9 @@ namespace Parade.Controllers
             {
                 query = query.OrderByDescending(x => x.First_Name).ThenBy(x => x.Last_Name).ThenBy(x => x.Middle_Name);
             }
-            if (paradeSize == 0)
-            {
-                people = query.Skip(paradeRecords).Take(Size).ToList();
-                webConfigApp.AppSettings.Settings["ParadeSize"].Value = Size.ToString();
-                webConfigApp.AppSettings.Settings["ParadeRecords"].Value = Size.ToString();
-            }
-            else
-            {
-                people = query.Skip(paradeRecords).Take(paradeSize).ToList();
-                int count = people.Count;
-                webConfigApp.AppSettings.Settings["ParadeRecords"].Value = (count + paradeSize).ToString();
-            }
+            people = query.Skip(paradeRecords).Take(paradeSize).ToList();
+            int count = people.Count;
+            webConfigApp.AppSettings.Settings["ParadeRecords"].Value = (count + paradeRecords).ToString();
             webConfigApp.Save();
             if (Format == "xlsx")
             {

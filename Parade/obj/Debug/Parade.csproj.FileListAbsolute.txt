@@ -76,7 +76,6 @@ C:\Users\Hardik\source\repos\Parade\Parade\bin\System.Web.WebPages.Razor.xml
 C:\Users\Hardik\source\repos\Parade\Parade\bin\Newtonsoft.Json.xml
 C:\Users\Hardik\source\repos\Parade\Parade\bin\Antlr3.Runtime.pdb
 C:\Users\Hardik\source\repos\Parade\Parade\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-C:\Users\Hardik\source\repos\Parade\Parade\obj\Debug\Parade.csprojAssemblyReference.cache
 C:\Users\Hardik\source\repos\Parade\Parade\obj\Debug\Parade.csproj.CoreCompileInputs.cache
 C:\Users\Hardik\source\repos\Parade\Parade\obj\Debug\Parade.csproj.CopyComplete
 C:\Users\Hardik\source\repos\Parade\Parade\obj\Debug\Parade.dll
